@@ -1,43 +1,43 @@
-# claude-code-notify — Claude Code 完了通知プラグイン
+# claude-code-notify — Claude Code Completion Notification Plugin
 
-Claude Code のタスク完了時に OS ネイティブ通知を送る Claude Code プラグイン。
+A Claude Code plugin that sends OS-native notifications when tasks complete.
 
-| OS | 通知方式 |
-|----|---------|
+| OS | Notification Method |
+|----|---------------------|
 | Windows 10/11 | SnoreToast (WinRT Toast) |
 | macOS ≥ 10.14 | Notification Center |
 | Linux | notify-send (libnotify) |
 
-`node-notifier` を `pnpm dlx` / `npx` でオンデマンド実行するため、**事前インストール不要**。
+Runs `node-notifier` on-demand via `pnpm dlx` / `npx` — **no pre-installation required**.
 
 ---
 
-## インストール
+## Installation
 
-### 1. マーケットプレイスを登録してインストール（推奨）
+### 1. Register marketplace and install (recommended)
 
 ```bash
-# マーケットプレイスを追加（GitHub URL は実際のリポジトリに変更）
+# Add marketplace (replace GitHub URL with the actual repository)
 /plugin marketplace add https://github.com/hidao/claude-code-notify-plugin
 
-# プラグインをインストール
+# Install the plugin
 /plugin install claude-code-notify@claude-code-notify-marketplace
 
-# または CLI で（ユーザースコープ）
+# Or via CLI (user scope)
 claude plugin install claude-code-notify@claude-code-notify-marketplace
 
-# プロジェクトスコープ（チーム共有）
+# Project scope (team shared)
 claude plugin install claude-code-notify@claude-code-notify-marketplace --scope project
 ```
 
-### 2. ローカルで試す（インストールなし）
+### 2. Try locally (no installation)
 
 ```bash
 git clone https://github.com/hidao/claude-code-notify-plugin
 claude --plugin-dir ./claude-code-notify-plugin
 ```
 
-### 3. 手動配置
+### 3. Manual setup
 
 ```bash
 git clone https://github.com/hidao/claude-code-notify-plugin ~/.claude/plugins/claude-code-notify
@@ -45,50 +45,50 @@ git clone https://github.com/hidao/claude-code-notify-plugin ~/.claude/plugins/c
 
 ---
 
-## 使い方
+## Usage
 
-インストール後は **何もしなくて OK**。Claude Code がタスクを完了するたびに自動で通知が飛ぶ。
+After installation, **nothing else is needed**. Notifications fire automatically whenever Claude Code completes a task.
 
-手動で通知を送りたい場合：
+To send a notification manually:
 
 ```bash
-node "${CLAUDE_PLUGIN_ROOT}/hooks/notify.mjs" --title "完了" --message "✅ ビルド成功"
+node "${CLAUDE_PLUGIN_ROOT}/hooks/notify.mjs" --title "Done" --message "✅ Build succeeded"
 ```
 
 ---
 
-## ファイル構成
+## File Structure
 
 ```
 claude-code-notify-plugin/
 ├── .claude-plugin/
-│   ├── plugin.json          # プラグインマニフェスト
-│   └── marketplace.json     # マーケットプレイスカタログ
+│   ├── plugin.json          # Plugin manifest
+│   └── marketplace.json     # Marketplace catalog
 ├── hooks/
-│   ├── hooks.json           # Stop hook 設定
-│   └── notify.mjs           # 通知スクリプト本体
+│   ├── hooks.json           # Stop hook configuration
+│   └── notify.mjs           # Notification script
 ├── agents/
-│   └── claude-code-notify-agent.md   # 通知サブエージェント定義
+│   └── claude-code-notify-agent.md   # Notification sub-agent definition
 ├── skills/
 │   └── notify-on-complete/
-│       └── SKILL.md         # /notify-on-complete スキル
+│       └── SKILL.md         # /notify-on-complete skill
 └── README.md
 ```
 
 ---
 
-## トラブルシューティング
+## Troubleshooting
 
-**Windows**: 設定 → 通知 → アプリ で `SnoreToast` のバナーを有効化。
+**Windows**: Go to Settings → Notifications → Apps and enable the `SnoreToast` banner.
 
-**Linux**: `sudo apt install libnotify-bin` が必要。
+**Linux**: Install `sudo apt install libnotify-bin`.
 
-**初回が遅い**: pnpm dlx が node-notifier をダウンロードするため初回のみ数秒かかる。
+**Slow on first run**: pnpm dlx downloads node-notifier on the first run, which takes a few seconds. Subsequent runs use the cache.
 
-**hook が動かない**: `claude --debug` で `claude-code-notify` が `loading plugin` に出るか確認。
+**Hook not firing**: Run `claude --debug` and check whether `claude-code-notify` appears in `loading plugin`.
 
 ---
 
-## ライセンス
+## License
 
 MIT

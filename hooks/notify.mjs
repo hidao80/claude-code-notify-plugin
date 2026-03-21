@@ -1,38 +1,38 @@
 #!/usr/bin/env node
 /**
- * notify.mjs — Claude Code Stop hook 完了通知スクリプト
+ * notify.mjs — Claude Code Stop hook completion notification script
  *
- * OS別通知方式:
- *   Windows 10/11  : SnoreToast (node-notifier 同梱バイナリ)
+ * Notification method by OS:
+ *   Windows 10/11  : SnoreToast (binary bundled with node-notifier)
  *   macOS >= 10.14 : Notification Center (terminal-notifier)
  *   Linux          : libnotify (notify-send)
  *
- * node-notifier は pnpm dlx / npx でオンデマンド実行。
- * 事前インストール不要。初回のみダウンロードが走る。
+ * node-notifier is run on-demand via pnpm dlx / npx.
+ * No pre-installation required. Download only happens on the first run.
  *
- * 使い方:
- *   node notify.mjs                              # stdin から stop hook JSON を受け取る
- *   node notify.mjs --title "完了" --message "OK" # メッセージを直接指定
+ * Usage:
+ *   node notify.mjs                                # receive stop hook JSON from stdin
+ *   node notify.mjs --title "Done" --message "OK"  # specify message directly
  */
 
 import { execFileSync } from "node:child_process";
 import { readFileSync } from "node:fs";
 
-// ── 引数パース ──────────────────────────────────────────────────────────────
+// ── Argument parsing ────────────────────────────────────────────────────────
 const args = process.argv.slice(2);
 const getArg = (flag) => {
   const i = args.indexOf(flag);
   return i !== -1 && args[i + 1] ? args[i + 1] : null;
 };
 
-// ── stdin から Stop hook JSON を受け取る ────────────────────────────────────
+// ── Read Stop hook JSON from stdin ──────────────────────────────────────────
 let hookData = {};
 try {
-  // /dev/stdin はWindowsでは使えないため process.stdin のfdを使う
-  const raw = readFileSync(0, "utf8").trim();   // fd 0 = stdin（クロスプラットフォーム）
+  // /dev/stdin is not available on Windows, so use process.stdin fd directly
+  const raw = readFileSync(0, "utf8").trim();   // fd 0 = stdin (cross-platform)
   if (raw) hookData = JSON.parse(raw);
 } catch {
-  // stdin なし・非JSON・パイプなしは無視
+  // No stdin, non-JSON, or no pipe — ignore
 }
 
 const stopReason = hookData.stop_reason ?? "completed";
@@ -42,11 +42,11 @@ const EMOJI = { end_turn: "✅", error: "❌", stop_sequence: "🛑" };
 const emoji = EMOJI[stopReason] ?? "✅";
 
 const title = getArg("--title") ?? "Claude Code";
-const message = getArg("--message") ?? `${emoji} 処理完了  [${stopReason}]  session: ${sessionId}`;
+const message = getArg("--message") ?? `${emoji} Task complete  [${stopReason}]  session: ${sessionId}`;
 
-// ── node-notifier をインライン eval で実行 ──────────────────────────────────
-// pnpm dlx / npx が node-notifier を自動インストールして node --eval で実行する。
-// このファイル自体は Node.js 標準 API のみ使用。
+// ── Run node-notifier via inline eval ───────────────────────────────────────
+// pnpm dlx / npx auto-installs node-notifier and runs it with node --eval.
+// This file itself only uses the Node.js standard API.
 const inlineScript = `
 const notifier = require('node-notifier');
 notifier.notify(
@@ -78,8 +78,8 @@ for (const [bin, runArgs] of runners) {
 }
 
 if (!notified) {
-  process.stderr.write(`[claude-code-notify] 通知送信失敗 (pnpm/npx どちらも失敗)\n`);
+  process.stderr.write(`[claude-code-notify] Failed to send notification (both pnpm and npx failed)\n`);
 }
 
-// Stop hook を妨げないよう常に exit 0
+// Always exit 0 to avoid interrupting Stop hooks
 process.exit(0);
