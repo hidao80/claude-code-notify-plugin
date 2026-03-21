@@ -1,0 +1,21 @@
+{
+  "name": "claude-code-notify",
+  "version": "1.0.0",
+  "description": "Claude Code 処理完了時に OS ネイティブ通知を送る。Windows / macOS / Linux 共通動作。node-notifier を pnpm dlx / npx でオンデマンド実行するため事前インストール不要。",
+  "author": {
+    "name": "Hidao",
+    "url": "https://github.com/hidao"
+  },
+  "license": "MIT",
+  "keywords": [
+    "notification",
+    "toast",
+    "notify",
+    "hook",
+    "stop",
+    "cross-platform"
+  ],
+  "hooks": "./hooks/hooks.json",
+  "agents": "./agents/",
+  "skills": "./skills/"
+}

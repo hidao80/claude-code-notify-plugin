@@ -1,0 +1,22 @@
+{
+  "name": "claude-code-notify-marketplace",
+  "owner": {
+    "name": "Hidao",
+    "url": "https://github.com/hidao/claude-code-notify-plugin"
+  },
+  "plugins": [
+    {
+      "name": "claude-code-notify",
+      "source": "./",
+      "description": "Claude Code 処理完了時に OS ネイティブ通知を送る。Windows / macOS / Linux 共通動作。node-notifier を pnpm dlx / npx でオンデマンド実行するため事前インストール不要。",
+      "category": "productivity",
+      "tags": [
+        "notification",
+        "toast",
+        "hook",
+        "cross-platform",
+        "stop-hook"
+      ]
+    }
+  ]
+}
