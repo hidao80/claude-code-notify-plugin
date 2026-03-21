@@ -16,6 +16,6 @@
     "cross-platform"
   ],
   "hooks": "./hooks/hooks.json",
-  "agents": "./agents/",
-  "skills": "./skills/"
+  "agents": "../agents/",
+  "skills": "../skills/"
 }
