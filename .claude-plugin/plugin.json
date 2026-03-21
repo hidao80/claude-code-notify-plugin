@@ -4,7 +4,7 @@
   "description": "Sends OS-native notifications when Claude Code tasks complete. Works on Windows, macOS, and Linux. Runs node-notifier on-demand via pnpm dlx / npx — no pre-installation required.",
   "author": {
     "name": "Hidao",
-    "url": "https://github.com/hidao"
+    "url": "https://github.com/hidao80"
   },
   "license": "MIT",
   "keywords": [

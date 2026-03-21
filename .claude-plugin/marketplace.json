@@ -1,12 +1,12 @@
 {
-  "name": "claude-code-notify-plugin",
+  "name": "hidao80-plugins",
   "owner": {
     "name": "Hidao",
     "url": "https://github.com/hidao80/claude-code-notify-plugin"
   },
   "plugins": [
     {
-      "name": "claude-code-notify-plugin",
+      "name": "claude-code-notify",
       "source": "./",
       "description": "Sends OS-native notifications when Claude Code tasks complete. Works on Windows, macOS, and Linux. Runs node-notifier on-demand via pnpm dlx / npx — no pre-installation required.",
       "category": "productivity",
