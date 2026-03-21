@@ -18,7 +18,7 @@ Runs `node-notifier` on-demand via `pnpm dlx` / `npx` — **no pre-installation 
 
 ```bash
 # Add marketplace (replace GitHub URL with the actual repository)
-/plugin marketplace add https://github.com/hidao/claude-code-notify-plugin
+/plugin marketplace add https://github.com/hidao80/claude-code-notify-plugin
 
 # Install the plugin
 /plugin install claude-code-notify@claude-code-notify-marketplace
@@ -33,14 +33,14 @@ claude plugin install claude-code-notify@claude-code-notify-marketplace --scope 
 ### 2. Try locally (no installation)
 
 ```bash
-git clone https://github.com/hidao/claude-code-notify-plugin
+git clone https://github.com/hidao80/claude-code-notify-plugin
 claude --plugin-dir ./claude-code-notify-plugin
 ```
 
 ### 3. Manual setup
 
 ```bash
-git clone https://github.com/hidao/claude-code-notify-plugin ~/.claude/plugins/claude-code-notify
+git clone https://github.com/hidao80/claude-code-notify-plugin ~/.claude/plugins/claude-code-notify
 ```
 
 ---
