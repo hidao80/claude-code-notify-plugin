@@ -3,9 +3,10 @@
   "version": "0.1.0",
   "description": "Sends OS-native notifications when Claude Code tasks complete. Works on Windows, macOS, and Linux. Runs node-notifier on-demand via pnpm dlx / npx — no pre-installation required.",
   "author": {
-    "name": "Hidao",
+    "name": "hidao80",
     "url": "https://github.com/hidao80"
   },
+  "repository": "https://github.com/hidao80/claude-code-notify-plugin",
   "license": "MIT",
   "keywords": [
     "notification",
@@ -14,8 +15,5 @@
     "hook",
     "stop",
     "cross-platform"
-  ],
-  "hooks": "./hooks/hooks.json",
-  "agents": "../agents/",
-  "skills": "../skills/"
+  ]
 }
