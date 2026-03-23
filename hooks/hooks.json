@@ -6,7 +6,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node -e \"const { spawnSync } = require('node:child_process'); const path = require('path'); const root = process.env.CLAUDE_PLUGIN_ROOT || '.'; const isWin = process.platform === 'win32'; const command = isWin ? (process.env.ComSpec || 'cmd.exe') : 'bash'; const scriptPath = path.join(root, 'hooks', isWin ? 'play-sound.bat' : 'play-sound.sh'); const args = isWin ? ['/d', '/s', '/c', scriptPath] : [scriptPath]; spawnSync(command, args, { stdio: 'ignore', windowsHide: true }); process.exit(0);\"",
+            "command": "node hooks/notify.mjs",
             "timeout": 15
           }
         ]
