@@ -1,12 +1,10 @@
 {
   "name": "claude-code-notify",
   "version": "0.1.0",
-  "description": "Claude Code Stop hook desktop notification",
-  "type": "module",
+  "description": "Claude Code Stop hook that plays completion sounds on Windows, macOS, and Linux",
   "engines": {
     "node": ">=18"
   },
-  "scripts": {
-    "test": "node --test hooks/notify.test.mjs"
-  }
+  "license": "MIT",
+  "scripts": {}
 }

@@ -1,93 +1,67 @@
-# claude-code-notify — Claude Code Completion Notification Plugin
+# claude-code-notify - Claude Code Completion Sound Hook
 
-A Claude Code plugin that sends OS-native notifications when tasks complete.
+A Claude Code plugin that plays a completion sound when the CLI finishes.
 
-| OS | Notification Method |
-|----|---------------------|
-| Windows 10/11 | SnoreToast (WinRT Toast) |
-| macOS ≥ 10.14 | Notification Center |
-| Linux | notify-send (libnotify) |
+`hooks/hooks.json` dispatches directly to an OS-specific helper:
 
-Runs `node-notifier` on-demand via `pnpm dlx` / `npx` — **no pre-installation required**.
-
----
+- Windows 11: `hooks/play-sound.bat`
+- macOS: `hooks/play-sound.sh` via `afplay` or `osascript`
+- Linux desktop: `hooks/play-sound.sh` via `paplay`, `pw-play`, `canberra-gtk-play`, `aplay`, or `speaker-test`
 
 ## Installation
 
-### 1. Register marketplace and install (recommended)
+### 1. Register marketplace and install the Claude plugin
 
 ```bash
-# Add marketplace (replace GitHub URL with the actual repository)
 /plugin marketplace add https://github.com/hidao80/claude-code-notify-plugin
-
-# Install the plugin
 /plugin install claude-code-notify@hidao80-plugins
-
-# Or via CLI (user scope)
-claude plugin install claude-code-notify@hidao80-plugins
-
-# Project scope (team shared)
-claude plugin install claude-code-notify@hidao80-plugins --scope project
 ```
 
-### 2. Try locally (no installation)
-
-```bash
-git clone https://github.com/hidao80/claude-code-notify-plugin
-claude --plugin-dir ./claude-code-notify-plugin
-```
-
-### 3. Manual setup
-
-```bash
-git clone https://github.com/hidao80/claude-code-notify-plugin ~/.claude/plugins/claude-code-notify
-```
-
----
+No editor extension is required. Once the plugin is installed, the Stop hook will try to play a sound locally on the machine where Claude Code is running.
 
 ## Usage
 
-After installation, **nothing else is needed**. Notifications fire automatically whenever Claude Code completes a task.
+When Claude Code reaches the `Stop` hook, `hooks/hooks.json` runs a small inline command that selects `play-sound.bat` on Windows and `play-sound.sh` on macOS/Linux.
 
-To send a notification manually:
+The helper scripts ignore hook stdin and just play a local completion sound.
 
-```bash
-node "${CLAUDE_PLUGIN_ROOT}/hooks/notify.mjs" --title "Done" --message "✅ Build succeeded"
+You can also smoke-test the hook manually:
+
+Windows:
+
+```bat
+hooks\play-sound.bat
 ```
 
----
+macOS / Linux:
+
+```bash
+bash hooks/play-sound.sh
+```
 
 ## File Structure
 
-```
+```text
 claude-code-notify-plugin/
-├── .claude-plugin/
-│   ├── plugin.json          # Plugin manifest
-│   └── marketplace.json     # Marketplace catalog
-├── hooks/
-│   ├── hooks.json           # Stop hook configuration
-│   └── notify.mjs           # Notification script
-├── agents/
-│   └── claude-code-notify-agent.md   # Notification sub-agent definition
-├── skills/
-│   └── notify-on-complete/
-│       └── SKILL.md         # /notify-on-complete skill
-└── README.md
+|-- .claude-plugin/
+|   |-- plugin.json
+|   `-- marketplace.json
+|-- hooks/
+|   |-- hooks.json
+|   |-- play-sound.bat
+|   `-- play-sound.sh
+`-- README.md
 ```
-
----
 
 ## Troubleshooting
 
-**Windows**: Go to Settings → Notifications → Apps and enable the `SnoreToast` banner.
+**No sound on Windows 11**: Confirm PowerShell is available at the standard Windows PowerShell path.
 
-**Linux**: Install `sudo apt install libnotify-bin`.
+**No sound on macOS**: Check that `afplay` or `osascript` is available.
 
-**Slow on first run**: pnpm dlx downloads node-notifier on the first run, which takes a few seconds. Subsequent runs use the cache.
+**No sound on Linux desktop**: Install one of `paplay`, `pw-play`, `canberra-gtk-play`, `aplay`, or `speaker-test`.
 
 **Hook not firing**: Run `claude --debug` and check whether `claude-code-notify` appears in `loading plugin`.
-
----
 
 ## License
 

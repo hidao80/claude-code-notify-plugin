@@ -1,7 +1,7 @@
 {
   "name": "claude-code-notify",
   "version": "0.1.0",
-  "description": "Sends OS-native notifications when Claude Code tasks complete. Works on Windows, macOS, and Linux. Runs node-notifier on-demand via pnpm dlx / npx — no pre-installation required.",
+  "description": "Plays a completion sound when Claude Code finishes on Windows, macOS, and Linux.",
   "author": {
     "name": "hidao80",
     "url": "https://github.com/hidao80"
@@ -10,10 +10,12 @@
   "license": "MIT",
   "keywords": [
     "notification",
-    "toast",
     "notify",
     "hook",
     "stop",
-    "cross-platform"
+    "windows",
+    "macos",
+    "linux",
+    "sound"
   ]
 }
