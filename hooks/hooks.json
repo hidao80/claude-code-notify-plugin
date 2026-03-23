@@ -6,7 +6,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node -e \"const { spawnSync } = require('node:child_process'); const root = process.env.CLAUDE_PLUGIN_ROOT || ''; const isWin = process.platform === 'win32'; const command = isWin ? (process.env.ComSpec || 'cmd.exe') : 'bash'; const args = isWin ? ['/d', '/s', '/c', root + '\\\\hooks\\\\play-sound.bat'] : [root + '/hooks/play-sound.sh']; const result = spawnSync(command, args, { stdio: 'ignore', windowsHide: true }); process.exit(result.status ?? 0);\"",
+            "command": "node -e \"const { spawnSync } = require('node:child_process'); const root = process.env.CLAUDE_PLUGIN_ROOT || ''; const isWin = process.platform === 'win32'; const command = isWin ? (process.env.ComSpec || 'cmd.exe') : 'bash'; const args = isWin ? ['/d', '/s', '/c', root + '\\\\hooks\\\\play-sound.bat'] : [root + '/hooks/play-sound.sh']; spawnSync(command, args, { stdio: 'ignore', windowsHide: true }); process.exit(0);\"",
             "timeout": 15
           }
         ]
